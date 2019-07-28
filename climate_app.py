@@ -34,7 +34,7 @@ app = Flask(__name__)
 
 
 
-# routes
+# list all available routes
 @app.route('/')
 def home():
     return ("Welcome to the Hawaii Climate Home Page<br/>"
@@ -42,10 +42,11 @@ def home():
             f"/api/v1.0/precipitation<br/>"
             f"/api/v1.0/stations<br/>"
             f"/api/v1.0/tobs<br/>"
-            f"/api/v1.0/start_date<br/>" 
-            f"/api/v1.0/start_date/end_date"
+            f"/api/v1.0/(insert_start_date_as_yyyy-mm-dd)<br/>" 
+            f"/api/v1.0/(insert_start_date_as_yyyy-mm-dd/(insert_end_date_as_yyyy-mm-dd)"
            )
 
+# precipitation route
 @app.route('/api/v1.0/precipitation')
 def precipitation():
     
@@ -67,6 +68,7 @@ def precipitation():
         
     return jsonify(prcp_list)
 
+# station route
 @app.route('/api/v1.0/stations')
 def stations():
     stations = session.query(Measurement.station).\
@@ -77,6 +79,7 @@ def stations():
     return jsonify(stations)
 
 
+# temperature observation route
 @app.route('/api/v1.0/tobs')
 def tobs():
     
@@ -91,18 +94,22 @@ def tobs():
     
     return jsonify(temp_obs)
 
+# start date route
 @app.route('/api/v1.0/<start>')
 def start_temp(start):
-    
-    temps = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+       
+    temps = session.query(func.min(Measurement.tobs),\
+        func.avg(Measurement.tobs),func.max(Measurement.tobs)).\
         filter(Measurement.date >= start).all()
     
     return jsonify(temps)
 
+# start and end date route
 @app.route('/api/v1.0/<start>/<end>')
 def start_end_temp(start, end):
-    
-    temps = session.query(func.min(Measurement.tobs), func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
+
+    temps = session.query(func.min(Measurement.tobs),\
+        func.avg(Measurement.tobs), func.max(Measurement.tobs)).\
         filter(Measurement.date >= start).\
         filter(Measurement.date <= end).all()
     
