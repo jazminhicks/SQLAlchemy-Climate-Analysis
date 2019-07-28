@@ -1,6 +1,6 @@
 # Surfs Up!
 
-![image](https://user-images.githubusercontent.com/49836101/62001704-ed698800-b0bb-11e9-80ca-6284af931ae1.png){width = 50%}
+![image](https://user-images.githubusercontent.com/49836101/62001704-ed698800-b0bb-11e9-80ca-6284af931ae1.png){width = 25%}
 
 ## Part 1 - Climate Analysis and Exploration
 
